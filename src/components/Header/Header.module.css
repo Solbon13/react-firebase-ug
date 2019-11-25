@@ -1,0 +1,18 @@
+.header {
+    grid-area: h;
+    background-color: #3C2E2D;
+}
+
+.header img {
+    padding: 10px;
+    width: 180px;
+    text-align: center;
+}
+
+.logoName {
+    margin-top:-100px;
+    color: aliceblue;
+ text-align: center;
+
+    background-color: #3C2E2D;
+}
