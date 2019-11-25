@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import SignOutButton from '../SignOut';
+import SignOutButton from '../Account/SignOut';
 import * as ROUTES from '../../constants/routes';
-import { AuthUserContext } from '../Session';
+import { AuthUserContext } from '../Account/Session';
 import {NavLink} from "react-router-dom";
-import s from './Navbar.module.css';
+import s from './Navigation.module.css';
 
 const Navigation = () => (
   <div>
@@ -31,7 +31,7 @@ const NavigationAuth = () => (
       {/*отображаются новости (новые персоны которые заводит пользователь на которые он подписан, новые персоны с одинаковыми персональными данными)*/}
     </div>
     <div className={s.item}>
-      <NavLink to={ROUTES.ADMIN} activeClassName={s.activeLink}>Пользователи</NavLink>
+      <NavLink to={ROUTES.USERS} activeClassName={s.activeLink}>Пользователи</NavLink>
       {/*все зарегистрированные пользователи*/}
     </div>
     <div className={s.item}>

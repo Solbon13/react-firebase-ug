@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import s from './ProfileInfo.module.css';
+import s from './AccountInfo.module.css';
 import profilePicture from "../../../assets/images/profile.jpg";
 
 const AccountInfo = (props) => {
