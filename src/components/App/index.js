@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter,Route} from 'react-router-dom';
+import {BrowserRouter, Route} from 'react-router-dom';
 import Navigation from '../Navigation';
 import NewsPage from '../News';
 import SignUpPage from '../Account/SignUp';
@@ -8,10 +8,8 @@ import PasswordForgetPage from '../Account/PasswordForget';
 import DialogsPage from '../Dialogs';
 import AccountPage from '../Account';
 import UsersPage from '../Users';
-import {AuthUserContext} from '../Account/Session';
 import * as ROUTES from '../../constants/routes';
 import {withAuthentication} from '../Account/Session';
-import {withFirebase} from '../Firebase';
 import Header from '../Header/Header';
 import './App.css';
 
