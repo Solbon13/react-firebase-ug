@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import s from './AccountInfo.module.css';
 import profilePicture from "../../../assets/images/profile.jpg";
 
