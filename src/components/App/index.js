@@ -5,6 +5,7 @@ import NewsPage from '../News';
 import SignUpPage from '../Account/SignUp';
 import SignInPage from '../Account/SignIn';
 import PasswordForgetPage from '../Account/PasswordForget';
+import FamilyTreePage from '../FamilyTree';
 import DialogsPage from '../Dialogs';
 import AccountPage from '../Account';
 import UsersPage from '../Users';
@@ -26,6 +27,7 @@ const App = () => (
                 <Route path={ROUTES.NEWS} component={NewsPage}/>
                 <Route path={ROUTES.ACCOUNT} component={AccountPage}/>
                 <Route path={ROUTES.USERS} component={UsersPage}/>
+                <Route path={ROUTES.GENEALOGY} component={FamilyTreePage}/>
                 <hr/>
             </div>
         </div>

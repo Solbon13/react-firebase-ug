@@ -37,6 +37,8 @@ class Firebase {
     users = () => this.db.ref('users');
     //надо только свои сообщения сделать
     messages = () => this.db.ref('messages');
+    //надо только свою родню сделать
+    persons = () => this.db.ref('Person');
 }
 
 export default Firebase;
