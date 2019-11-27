@@ -5,6 +5,7 @@ import NewsPage from '../News';
 import SignUpPage from '../Account/SignUp';
 import SignInPage from '../Account/SignIn';
 import PasswordForgetPage from '../Account/PasswordForget';
+//import FamilyTreePage from '../Test';
 import FamilyTreePage from '../FamilyTree';
 import DialogsPage from '../Dialogs';
 import AccountPage from '../Account';
