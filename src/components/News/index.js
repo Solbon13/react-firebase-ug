@@ -1,25 +1,33 @@
 import React, {Component} from 'react';
 import {withFirebase} from "../Firebase";
+import s from './News.module.css';
+import NewsBox from "./NewsBox";
 
 class News extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             loading: false,
-            users: [],
+            news: [
+                {
+                    new: '',
+                    uid: 'none'
+                }
+            ],
         };
     }
 
     componentDidMount() {
         this.setState({loading: true});
-        this.props.firebase.messages().on('value', snapshot => {
-            const usersObject = snapshot.val();
-            const usersList = Object.keys(usersObject).map(key => ({
-                ...usersObject[key],
+        this.props.firebase.news().on('value', snapshot => {
+            const newsObject = snapshot.val();
+            const newsList = Object.keys(newsObject).map(key => ({
+                ...newsObject[key],
                 uid: key,
             }));
             this.setState({
-                users: usersList,
+                news: newsList,
                 loading: false,
             });
         });
@@ -27,31 +35,32 @@ class News extends Component {
 
     //
     componentWillUnmount() {
-        this.props.firebase.users().off();
+        this.props.firebase.news().off();
     }
 
     render() {
-        const {users, loading} = this.state;
+        const {news, loading} = this.state;
 
         return (
             <div>
                 <h1>Новости</h1>
+                <NewsBox />
                 {loading && <div>Loading ...</div>}
-                <UserList users={users}/>
+                <NewList news={news}/>
             </div>
         );
     }
 }
 
-const UserList = ({users}) => (
+const NewList = ({news}) => (
     <ul>
-        {users.map(user => (
-            <li key={user.uid}>
+        {news.map(newsPost => (
+            <li key={newsPost.uid}>
                 {/*<span>
           <strong>ID:</strong> {user.uid}
         </span>*/}
                 <span>
-          {user.message}
+          {newsPost.new}
         </span>
                 {/*<span>
           <strong>Username:</strong> {user.username}
