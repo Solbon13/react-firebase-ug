@@ -34,7 +34,7 @@ const NavigationAuth = () => (
             {/*все зарегистрированные пользователи*/}
         </div>
         <div className={s.item}>
-            <NavLink to={ROUTES.GENEALOGY} activeClassName={s.activeLink}>ген</NavLink>
+            <NavLink to={ROUTES.GENEALOGY} activeClassName={s.activeLink}>Древо</NavLink>
             {/*все зарегистрированные пользователи*/}
         </div>
         <div className={s.item}>
