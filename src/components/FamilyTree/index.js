@@ -18,6 +18,7 @@ class FamilyTreePage extends Component {
             loading: false, //загрузка
             persons: [], //персоны все
             selectedKindred: 'father',
+            accessPerson: [],
             selectedFloor: "",
             partner: "",
             mother: "",
@@ -55,6 +56,17 @@ class FamilyTreePage extends Component {
             }));
             this.setState({
                 persons: personsList,
+                loading: false,
+            });
+        });
+        this.props.firebase.users().on('value', snapshot => {
+            const personsObject = snapshot.val();
+            const personsList = Object.keys(personsObject).map(key => ({
+                ...personsObject[key],
+                uid: key,
+            }));
+            this.setState({
+                accessPerson: personsList,
                 loading: false,
             });
         });
@@ -146,9 +158,16 @@ class FamilyTreePage extends Component {
         const {persons, loading} = this.state;
         let personTree = [];
         let annotations = [];
+        let currentUser =[];
+        if (this.props.firebase.auth.currentUser != null) {
+            if (this.state.accessPerson.length > 0){
+                currentUser = this.state.accessPerson.filter(item => item.uid == this.props.firebase.auth.currentUser.uid)[0].AccessPerson;
+                console.log(currentUser)
+            }
         persons.forEach((elem, index) => {
-            if (!(this.props.firebase.auth.currentUser == null)) {
-                if (this.props.firebase.auth.currentUser.email == elem.userEdit) {
+
+            if (currentUser.indexOf(elem.userEdit) != -1) {
+
                     let parents = [];
                     if ("93678597-80c9-4410-bf8c-59564ef1e735" !== elem.mother)
                         parents.push(elem.mother);
@@ -196,7 +215,8 @@ class FamilyTreePage extends Component {
                         annotations.push(annotation);
                 }
             }
-        });
+    );
+        }
 
         const config = {
             pageFitMode: primitives.common.PageFitMode.AutoSize,
@@ -286,26 +306,13 @@ class FamilyTreePage extends Component {
             <div>
                 <h1>Древо</h1>
                 <div>
-                    {/*<PinchZoomPan
-                        debug
-                        captureWheel
-                        min={0.5}
-                        max={2.5}
 
-                    >*/}
                     {loading && <div>Loading ...</div>}
-                    {/*<TransformWrapper
-                        defaultScale={1}
-                        defaultPositionX={100}
-                        defaultPositionY={100}>
-                        <TransformComponent
-                            defaultScale={0.1}>*/}
+
 
                     <FamDiagram centerOnCursor={true} config={config}/>
 
-                    {/* </TransformComponent>
-                    </TransformWrapper>*/}
-                    {/*</PinchZoomPan>*/}
+
                 </div>
                 <ReactModal
                     isOpen={this.state.showModal}

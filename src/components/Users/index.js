@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {withFirebase} from '../Firebase';
+import User from "./user";
 
 class UsersPage extends Component {
     constructor(props) {
@@ -37,28 +38,10 @@ class UsersPage extends Component {
             <div>
                 <h1>Пользователи</h1>
                 {loading && <div>Loading ...</div>}
-                <UserList users={users}/>
+                {users.map(user => (<User user={user} currentUser = {this.state.users.filter(item => item.uid == this.props.firebase.auth.currentUser.uid)[0].AccessPerson}/>))}
             </div>
         );
     }
 }
-
-const UserList = ({users}) => (
-    <ul>
-        {users.map(user => (
-            <li key={user.uid}>
-                {/*<span>
-          <strong>ID:</strong> {user.uid}
-        </span>*/}
-                <span>
-          <strong>E-Mail:</strong> {user.email}
-        </span>
-                <span>
-          <strong>Username:</strong> {user.username}
-        </span>
-            </li>
-        ))}
-    </ul>
-);
 
 export default withFirebase(UsersPage);
