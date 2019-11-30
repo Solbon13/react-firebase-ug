@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {withFirebase} from "../Firebase";
-import s from './News.module.css';
 import NewsBox from "./NewsBox";
 
 class News extends Component {

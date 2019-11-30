@@ -6,7 +6,7 @@ const AccountInfo = (props) => {
     return (
         <div>
             <div>
-                <img src={profilePicture}/>
+                <img src={profilePicture} alt=""/>
             </div>
             <div className={s.descriptionBlock}>
                 {props.login}

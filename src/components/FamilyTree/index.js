@@ -86,15 +86,15 @@ class FamilyTreePage extends Component {
         this.setState({showModal: false});
         const uuidv1 = require('uuid/v1');
         let uid = uuidv1();
-        if (this.state.operation == "add")
+        if (this.state.operation === "add")
             this.state.person.uid = uid;
 
 
-        if (this.state.selectedValue == "father") {
+        if (this.state.selectedValue === "father") {
             this.state.person.father = this.state.partner;
             this.state.person.mother = this.state.mother;
         } else {
-            /*let personTemp = this.state.persons.filter(item => item.uid === this.state.partner)[0];
+            /*let personTemp = this.state.persons.filter(item => item.uid ==== this.state.partner)[0];
             /!*выбор сделать родителя*!/
             personTemp.father = this.state.person.uid;
 
@@ -114,30 +114,30 @@ class FamilyTreePage extends Component {
 
     onChange(e) {
         this.setState({});
-        if (e.target.name == 'name')
+        if (e.target.name === 'name')
             this.state.person.name = e.target.value;
-        if (e.target.name == 'firstName')
+        if (e.target.name === 'firstName')
             this.state.person.firstName = e.target.value;
-        console.log(e.target.name == 'name')
+        console.log(e.target.name === 'name')
         console.log(this.state.person)
     }
 
     handleChangeRadio(value) {
-        if (value == 'womanFloor'){
+        if (value === 'womanFloor'){
             this.setState({selectedFloor: value});
             this.state.person.floor = "Жен.";
         }
 
-        if (value == 'manFloor'){
+        if (value === 'manFloor'){
             this.setState({selectedFloor: value});
             this.state.person.floor = "Муж.";
         }
 
-        if (value == 'children'){
+        if (value === 'children'){
             this.setState({selectedKindred: value});
         }
 
-        if (value == 'father'){
+        if (value === 'father'){
             this.setState({selectedKindred: value});
         }
 
@@ -159,14 +159,14 @@ class FamilyTreePage extends Component {
         let personTree = [];
         let annotations = [];
         let currentUser =[];
-        if (this.props.firebase.auth.currentUser != null) {
+        if (this.props.firebase.auth.currentUser !== null) {
             if (this.state.accessPerson.length > 0){
-                currentUser = this.state.accessPerson.filter(item => item.uid == this.props.firebase.auth.currentUser.uid)[0].AccessPerson;
+                currentUser = this.state.accessPerson.filter(item => item.uid === this.props.firebase.auth.currentUser.uid)[0].AccessPerson;
                 console.log(currentUser)
             }
         persons.forEach((elem, index) => {
 
-            if (currentUser.indexOf(elem.userEdit) != -1) {
+            if (currentUser.indexOf(elem.userEdit) !== -1) {
 
                     let parents = [];
                     if ("93678597-80c9-4410-bf8c-59564ef1e735" !== elem.mother)
@@ -194,7 +194,7 @@ class FamilyTreePage extends Component {
                         itemTitleColor: "#4b0082"
                     };
 
-                    if ("93678597-80c9-4410-bf8c-59564ef1e735" !== elem.uid)
+                    //if ("93678597-80c9-4410-bf8c-59564ef1e735" !== elem.uid)
                         personTree.push(person);
 
                     let annotation = {
@@ -347,7 +347,7 @@ class FamilyTreePage extends Component {
                                 <legend><b>Пол</b></legend>
                                 <RadioGroup
                                     name="Floor"
-                                    selectedValue={this.state.person.floor == "Жен." ? "womanFloor" : "manFloor"}
+                                    selectedValue={this.state.person.floor === "Жен." ? "womanFloor" : "manFloor"}
                                     onChange={this.handleChangeRadio}>
                                     <label>
                                         <Radio value="manFloor"/>Муж.
@@ -372,7 +372,7 @@ class FamilyTreePage extends Component {
 
                             <p>Отец</p>
                             <p><select onChange={this.handleChangeComboBoxFather} value={this.state.person.father}>{selectPartner}</select></p>
-                            <p>Отец</p>
+                            <p>Мать</p>
                             <p><select onChange={this.handleChangeComboBoxMother} value={this.state.person.mother}>{selectPartner}</select> </p>
                         </div>
 

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import s from './News.module.css';
-import {withAuthorization} from "../Account/Session";
 import {withFirebase} from "../Firebase";
 
 class NewsBox extends Component {
@@ -51,5 +50,5 @@ class NewsBox extends Component {
             return (<div className={s.form}>Для добавления новостей необходимо авторизация</div>)
     }
 }
-const condition = authUser => !!authUser;
+
 export default withFirebase(NewsBox);

@@ -40,6 +40,7 @@ class Firebase {
     //надо только свою родню сделать
     persons = () => this.db.ref('Person');
     news = () => this.db.ref('news');
+    notifications = () => this.db.ref('notifications');
 }
 
 export default Firebase;

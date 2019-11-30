@@ -9,7 +9,6 @@ class DialogsPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false,
       users: [],
       messages: [],
     };
@@ -25,7 +24,6 @@ class DialogsPage extends Component {
       }));
       this.setState({
         users: usersList,
-        loading: false,
       });
     });
     this.props.firebase.messages().on('value', snapshot => {
@@ -36,7 +34,6 @@ class DialogsPage extends Component {
       }));
       this.setState({
         messages: messagesList,
-        loading: false,
       });
     });
   }
@@ -47,12 +44,12 @@ class DialogsPage extends Component {
   }
 
 render() {
-  const {messages, users, loading} = this.state;
+  const {messages, users} = this.state;
 
 
   let dialogsElements =  users.map( d => <DialogItem name={d.username} id={d.uid} />  );
   let messagesElements = messages.map( m => {
-    if (this.props.firebase.auth.currentUser.uid == m.uidUser1)
+    if (this.props.firebase.auth.currentUser.uid === m.uidUser1)
     return <Message message={m.message}/>
   } );
   return (
