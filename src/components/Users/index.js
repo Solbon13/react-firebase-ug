@@ -14,7 +14,7 @@ class UsersPage extends Component {
 
     componentDidMount() {
         this.setState({loading: true});
-        this.props.firebase.users().on('value', snapshot => {
+        this.props.firebase.tablePath('users').on('value', snapshot => {
             const usersObject = snapshot.val();
             const usersList = Object.keys(usersObject).map(key => ({
                 ...usersObject[key],
@@ -25,7 +25,7 @@ class UsersPage extends Component {
                 loading: false,
             });
         });
-        this.props.firebase.notifications().on('value', snapshot => {
+        this.props.firebase.tablePath('notifications').on('value', snapshot => {
             const usersObject = snapshot.val();
             const usersList = Object.keys(usersObject).map(key => ({
                 ...usersObject[key],
@@ -39,16 +39,19 @@ class UsersPage extends Component {
 
     //
     componentWillUnmount() {
-        this.props.firebase.users().off();
+        this.props.firebase.tablePath('users').off();
     }
 
     render() {
         const {users, loading} = this.state;
-
         return (
             <div>
                 <h1>Пользователи</h1>
                 {loading && <div>Loading ...</div>}
+                {console.log("firebase.tableData()")}
+                {console.log(this.props.firebase.tableData('notifications'))}
+                {console.log("notifications")}
+                {console.log(this.state.notifications)}
                 {users.map(user => (<User user={user}
                                           currentUser = {this.state.users.filter(item => item.uid === this.props.firebase.auth.currentUser.uid)[0].AccessPerson}
                                           notification = {this.state.notifications.filter(item => (item.userFrom.toLocaleLowerCase() === this.props.firebase.auth.currentUser.email.toLocaleLowerCase())

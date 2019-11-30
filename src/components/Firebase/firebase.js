@@ -33,14 +33,27 @@ class Firebase {
         this.auth.currentUser.updatePassword(password);
 
     // *** User API ***
-    user = uid => this.db.ref(`users/${uid}`);
-    users = () => this.db.ref('users');
+    recordsTable = (tableName, uid) => this.db.ref(`${tableName}/${uid}`);
+
+    tablePath = (tableName) => this.db.ref(tableName);
+
+    tableData = (tableName) => {
+        let usersList = [];
+        this.db.ref(tableName).on('value', snapshot => {
+            const usersObject = snapshot.val();
+            usersList = Object.keys(usersObject).map(key => ({
+                ...usersObject[key],
+                uid: key,
+            }));
+        });
+        return usersList
+    }
+
     //надо только свои сообщения сделать
     messages = () => this.db.ref('messages');
     //надо только свою родню сделать
     persons = () => this.db.ref('Person');
     news = () => this.db.ref('news');
-    notifications = () => this.db.ref('notifications');
 }
 
 export default Firebase;

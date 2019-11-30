@@ -5,20 +5,20 @@ class Notification extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            notificationsAcces: [],
+            notificationsAccess: [],
 
         };
     }
 
     componentDidMount() {
-        this.props.firebase.notifications().on('value', snapshot => {
-            const usersObject = snapshot.val();
-            const usersList = Object.keys(usersObject).map(key => ({
-                ...usersObject[key],
+        this.props.firebase.tablePath('notifications').on('value', snapshot => {
+            const valueObject = snapshot.val();
+            const dataList = Object.keys(valueObject).map(key => ({
+                ...valueObject[key],
                 uid: key,
             }));
             this.setState({
-                notificationsAcces: usersList.filter(item => (item.userTo.toLocaleLowerCase() === this.props.firebase.auth.currentUser.email.toLocaleLowerCase()))
+                notificationsAccess: dataList.filter(item => (item.userTo.toLocaleLowerCase() === this.props.firebase.auth.currentUser.email.toLocaleLowerCase()))
             });
         });
     }
@@ -28,10 +28,10 @@ class Notification extends Component {
         /*this.props.firebase.notifications().off();*/
     }
     render() {
-        const {notificationsAcces} = this.state;
+        const {notificationsAccess} = this.state;
         return (
             <div>
-                <UserList users={notificationsAcces}/>
+                <UserList users={notificationsAccess}/>
             </div>
         )
     }

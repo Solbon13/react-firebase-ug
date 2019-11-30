@@ -59,7 +59,7 @@ class FamilyTreePage extends Component {
                 loading: false,
             });
         });
-        this.props.firebase.users().on('value', snapshot => {
+        this.props.firebase.tablePath('users').on('value', snapshot => {
             const personsObject = snapshot.val();
             const personsList = Object.keys(personsObject).map(key => ({
                 ...personsObject[key],
@@ -74,7 +74,7 @@ class FamilyTreePage extends Component {
 
     //
     componentWillUnmount() {
-        this.props.firebase.users().off();
+        this.props.firebase.tablePath('users').off();
     }
 
     handleCloseModal() {
@@ -228,7 +228,6 @@ class FamilyTreePage extends Component {
             hasSelectorCheckbox: primitives.common.Enabled.False,
             arrowsDirection: primitives.common.GroupByType.Parents,
             showExtraArrows: false,
-            /*hasSelectorCheckbox: primitives.common.Enabled.True,*/
             items: personTree,
             annotations: annotations,
             hasButtons: primitives.common.Enabled.Auto,
