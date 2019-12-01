@@ -54,6 +54,7 @@ class UsersPage extends Component {
                 {console.log(this.state.notifications)}
                 {users.map(user => (<User user={user}
                                           currentUser = {this.state.users.filter(item => item.uid === this.props.firebase.auth.currentUser.uid)[0].AccessPerson}
+                                          currentUserUID = {this.state.users.filter(item => item.uid === this.props.firebase.auth.currentUser.uid)[0].uid}
                                           notification = {this.state.notifications.filter(item => (item.userFrom.toLocaleLowerCase() === this.props.firebase.auth.currentUser.email.toLocaleLowerCase())
                                               && item.userTo.toLocaleLowerCase() === user.email.toLocaleLowerCase())}
                                           db = {this.props.firebase}/>))}

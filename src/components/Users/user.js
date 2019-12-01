@@ -3,7 +3,7 @@ import styles from "./users.module.css";
 import userPhoto from "../../assets/images/user_add.png";
 import {NavLink} from "react-router-dom";
 
-let User = ({user, currentUser, db, notification}) => {
+let User = ({user, currentUser, db, notification, currentUserUID}) => {
 
 
     let getStatusButton = () => {
@@ -22,6 +22,7 @@ let User = ({user, currentUser, db, notification}) => {
         let now = new Date();
         let access = {
             userFrom: currentUser[0],
+            currentUserUID: currentUserUID,
             userTo: user.email,
             dateNotifications: now
         };

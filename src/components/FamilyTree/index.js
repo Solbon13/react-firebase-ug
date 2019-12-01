@@ -10,6 +10,7 @@ import ReactModal from 'react-modal';
 import {RadioGroup, Radio} from './Radio';
 
 
+
 class FamilyTreePage extends Component {
     constructor(props) {
         super(props);
@@ -20,6 +21,7 @@ class FamilyTreePage extends Component {
             selectedKindred: 'father',
             accessPerson: [],
             selectedFloor: "",
+            uidRecordDel: "",
             partner: "",
             mother: "",
             person: {
@@ -82,34 +84,28 @@ class FamilyTreePage extends Component {
     }
 
     handleCloseModalSave() {
-        this.state.person.userEdit = this.props.firebase.auth.currentUser.email;
-        this.setState({showModal: false});
-        const uuidv1 = require('uuid/v1');
-        let uid = uuidv1();
-        if (this.state.operation === "add")
-            this.state.person.uid = uid;
+        if (this.state.operation === "delete"){
+            this.props.firebase.persons().child('/' + this.state.uidRecordDel)
+                .remove();
+        }else{
+            this.state.person.userEdit = this.props.firebase.auth.currentUser.email;
+            this.setState({showModal: false});
+            const uuidv1 = require('uuid/v1');
+            let uid = uuidv1();
+            if (this.state.operation === "add")
+                this.state.person.uid = uid;
 
 
-        if (this.state.selectedValue === "father") {
-            this.state.person.father = this.state.partner;
-            this.state.person.mother = this.state.mother;
-        } else {
-            /*let personTemp = this.state.persons.filter(item => item.uid ==== this.state.partner)[0];
-            /!*выбор сделать родителя*!/
-            personTemp.father = this.state.person.uid;
+            if (this.state.selectedValue === "father") {
+                this.state.person.father = this.state.partner;
+                this.state.person.mother = this.state.mother;
+            }
+            this.state.person.userEdit = this.props.firebase.auth.currentUser.email;
 
-            this.props.firebase.persons().child('/' + personTemp.uid)
-                .set(personTemp);*/
+
+            this.props.firebase.persons().child('/' + this.state.person.uid)
+                .set(this.state.person);
         }
-        this.state.person.userEdit = this.props.firebase.auth.currentUser.email;
-
-
-        this.props.firebase.persons().child('/' + this.state.person.uid)
-            .set(this.state.person);
-
-        /*/!*this.props.firebase.persons().push(this.state.person);*!/
-        this.props.firebase.persons().child('/' + uid)
-            .set(this.state.person);*/
     }
 
     onChange(e) {
@@ -152,6 +148,16 @@ class FamilyTreePage extends Component {
     handleChangeComboBoxMother(event) {
         this.setState({});
         this.state.person.mother = event.target.value;
+    }
+
+    getModalTitle = () => {
+        if (this.state.operation === "delete")
+            return "Удалить";
+        else
+        if (this.state.operation === "add")
+            return "Добавить";
+        else
+            return "Изменить";
     }
 
     render() {
@@ -238,9 +244,15 @@ class FamilyTreePage extends Component {
                     <button key="1" className="StyledButton"
                             onClick={(event) => {
                                 event.stopPropagation();
-                                alert(`Удалить ${itemConfig.id}`);
-                                this.props.firebase.persons().child('/' + itemConfig.id)
-                                    .remove();
+                                let personTemp = persons.filter(item => item.uid === itemConfig.id)[0];
+                                this.setState({
+                                    showModal: true,
+                                    person: personTemp,
+                                    operation: "delete",
+                                    uidRecordDel: itemConfig.id
+                                });
+                                /*this.props.firebase.persons().child('/' + itemConfig.id)
+                                    .remove();*/
                             }}
                     >
                         <img src={delUser}/>
@@ -305,7 +317,6 @@ class FamilyTreePage extends Component {
             <div>
                 <h1>Древо</h1>
                 <div>
-
                     {loading && <div>Loading ...</div>}
 
 
@@ -320,7 +331,7 @@ class FamilyTreePage extends Component {
                 >
                     <form className={s.form}>
                         <div className="container">
-                            <h1>{this.state.person.id}</h1>
+                            <h1>{this.getModalTitle()}</h1>
                             <fieldset>
                                 <legend><b>Фамилия</b></legend>
                                 <input type="text" placeholder="Фамилия" name="firstName"
@@ -379,6 +390,8 @@ class FamilyTreePage extends Component {
                     </form>
                     <button onClick={this.handleCloseModal}>Отмена</button>
                     <button onClick={this.handleCloseModalSave}>Сохранить</button>
+
+
                 </ReactModal>
 
             </div>
