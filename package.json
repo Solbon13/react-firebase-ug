@@ -7,7 +7,7 @@
     "@material-ui/lab": "^4.0.0-alpha.34",
     "basicprimitives": "^5.5.0",
     "basicprimitivesreact": "^5.5.0",
-    "firebase": "^7.5.0",
+    "firebase": "^10.9.0",
     "react": "^16.6.3",
     "react-autocomplete": "^1.8.1",
     "react-dom": "^16.6.3",
